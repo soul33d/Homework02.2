@@ -1,6 +1,5 @@
 package com.homelearning;
 
-import java.util.Arrays;
 import java.util.Queue;
 
 public class FixedSizeQueueDemo {
