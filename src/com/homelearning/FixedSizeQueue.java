@@ -43,6 +43,7 @@ public class FixedSizeQueue<E> implements Queue<E> {
         return queue.toArray();
     }
 
+    @SuppressWarnings("SuspiciousToArrayCall")
     @Override
     public <T> T[] toArray(T[] a) {
         return queue.toArray(a);
