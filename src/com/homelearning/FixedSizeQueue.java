@@ -4,7 +4,7 @@ import java.util.*;
 
 public class FixedSizeQueue<E> implements Queue<E> {
     private static final int DEFAULT_SIZE = 16;
-    private Deque<E> queue;
+    private Queue<E> queue;
 
     private int maxSize;
 
@@ -53,7 +53,7 @@ public class FixedSizeQueue<E> implements Queue<E> {
     public boolean add(E e) {
         if (queue.size() < maxSize) return queue.add(e);
         else {
-            queue.removeFirst();
+            queue.poll();
             return queue.add(e);
         }
     }
