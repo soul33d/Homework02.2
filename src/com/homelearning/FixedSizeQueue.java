@@ -13,9 +13,9 @@ public class FixedSizeQueue<E> implements Queue<E> {
         maxSize = DEFAULT_SIZE;
     }
 
-    public FixedSizeQueue(int size) {
-        if (size > 0) maxSize = size;
-        else maxSize = DEFAULT_SIZE;
+    public FixedSizeQueue(int maxSize) {
+        if (maxSize > 0) this.maxSize = maxSize;
+        else this.maxSize = DEFAULT_SIZE;
     }
 
     @Override
