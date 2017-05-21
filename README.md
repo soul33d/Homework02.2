@@ -27,6 +27,6 @@
 
 `public boolean addAll(Collection<? extends E> c)` - adds every element from `Collection<? extends E> c` to the end of queue, if reached `maxSize` removes first element of queue before adding every element to the end of queue.
 
-`public String toString()` - return String representation of the queue, if `isEmpty` returns `"Queue is empty."`
+`public String toString()` - returns String representation of the queue, if `isEmpty` returns `"Queue is empty."`
 
 All other methods from the `java.util.Queue<E>` implemented with default behaviour for queue and was delegated from `java.util.LinkedList<E>`
