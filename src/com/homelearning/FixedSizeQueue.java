@@ -54,11 +54,8 @@ public class FixedSizeQueue<E> implements Queue<E> {
 
     @Override
     public boolean add(E e) {
-        if (queue.size() < maxSize) return queue.add(e);
-        else {
-            queue.poll();
-            return queue.add(e);
-        }
+        if (queue.size() == maxSize) queue.poll();
+        return queue.add(e);
     }
 
     @Override
