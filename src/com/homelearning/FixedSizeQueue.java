@@ -1,6 +1,9 @@
 package com.homelearning;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class FixedSizeQueue<E> implements Queue<E> {
     private static final int DEFAULT_SIZE = 16;
@@ -9,13 +12,13 @@ public class FixedSizeQueue<E> implements Queue<E> {
     private int maxSize;
 
     public FixedSizeQueue() {
-        queue = new LinkedList<>();
-        maxSize = DEFAULT_SIZE;
+        this(DEFAULT_SIZE);
     }
 
     public FixedSizeQueue(int maxSize) {
         if (maxSize > 0) this.maxSize = maxSize;
         else this.maxSize = DEFAULT_SIZE;
+        queue = new LinkedList<>();
     }
 
     @Override
