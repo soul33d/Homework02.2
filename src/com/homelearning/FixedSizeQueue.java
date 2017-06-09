@@ -15,9 +15,14 @@ public class FixedSizeQueue<E> implements Queue<E> {
         this(DEFAULT_SIZE);
     }
 
+    /**
+     * @param maxSize mast be positive number.
+     * @throws ZeroQueueMaxSizeException if maxSize equals 0.
+     * @throws NegativeQueueMaxSizeException if maxSize is negative.
+     * */
     public FixedSizeQueue(int maxSize) {
-        if (maxSize < 0) throw new NegativeQueueMaxSizeException(maxSize);
         if (maxSize == 0) throw new ZeroQueueMaxSizeException(maxSize);
+        if (maxSize < 0) throw new NegativeQueueMaxSizeException(maxSize);
         this.maxSize = maxSize;
         queue = new LinkedList<>();
     }

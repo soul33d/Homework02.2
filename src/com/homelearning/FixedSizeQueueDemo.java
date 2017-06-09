@@ -18,7 +18,7 @@ import java.util.Queue;
 
 public class FixedSizeQueueDemo {
     public static void main(String[] args) {
-        FixedSizeQueue<Integer> queue = new FixedSizeQueue<>();
+        FixedSizeQueue<Integer> queue = new FixedSizeQueue<>(-10);
         printQueue(queue);
         queue.add(999);
         queue.add(800000);
