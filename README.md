@@ -1,3 +1,8 @@
+#Task 03.1
+
+Необходимо проанализировать коллекции, созданные для ДЗ по модулю 1.2 и выявить потенциально опасные моменты,
+ в которых могут произойти сбои. Создать кастомные исключения и бросать в случае ошибки.
+
 #Task 02.2
 Необходимо реализовать коллекцию, которая имеет фиксированный размер.
 
@@ -21,7 +26,10 @@
 
 `public FixedSizeQueue()` - creates the `Queue` with default size of 16 elements.
 
-`public FixedSizeQueue(int maxSize)` - creates `FixedSizeQueue` with predefined `maxSize` if `maxSize > 0` else with `DEFAULT_SIZE`
+`public FixedSizeQueue(int maxSize)` - creates `FixedSizeQueue` with predefined `maxSize` if `maxSize > 0`. 
+`maxSize` mast be positive number.
+throws `ZeroQueueMaxSizeException` if maxSize equals 0.
+throws `NegativeQueueMaxSizeException` if maxSize is negative.
 
 `public boolean add(E e)` - adds `e` to the end of the queue if `queue.size() < maxSize`, else removes first element before adding to the end of queue.
 
