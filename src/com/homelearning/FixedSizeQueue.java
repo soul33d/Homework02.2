@@ -16,8 +16,9 @@ public class FixedSizeQueue<E> implements Queue<E> {
     }
 
     public FixedSizeQueue(int maxSize) {
-        if (maxSize > 0) this.maxSize = maxSize;
-        else this.maxSize = DEFAULT_SIZE;
+        if (maxSize < 0) throw new NegativeQueueMaxSizeException(maxSize);
+        if (maxSize == 0) throw new ZeroQueueMaxSizeException(maxSize);
+        this.maxSize = maxSize;
         queue = new LinkedList<>();
     }
 
