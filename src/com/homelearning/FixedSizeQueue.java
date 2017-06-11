@@ -98,7 +98,7 @@ public class FixedSizeQueue<E> implements Queue<E> {
 
     @Override
     public boolean offer(E e) {
-        return queue.offer(e);
+        return add(e);
     }
 
     @Override
