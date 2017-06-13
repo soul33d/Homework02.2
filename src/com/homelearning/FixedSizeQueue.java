@@ -58,8 +58,10 @@ public class FixedSizeQueue<E> implements Queue<E> {
         return queue.toArray(a);
     }
 
+    /**@param e not null*/
     @Override
-    public boolean add(E e) {
+    public boolean add(@SuppressWarnings("ConstantConditions") E e){
+        if (e == null) throw new NullPointerException("null element is not permitted.");
         if (queue.size() == maxSize) queue.poll();
         return queue.add(e);
     }
