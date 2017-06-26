@@ -9,7 +9,7 @@ public class FixedSizeQueue<E> implements Queue<E> {
     private static final int DEFAULT_SIZE = 16;
     private Queue<E> queue;
 
-    private int maxSize;
+    private final int maxSize;
 
     public FixedSizeQueue() {
         this(DEFAULT_SIZE);
@@ -28,17 +28,17 @@ public class FixedSizeQueue<E> implements Queue<E> {
     }
 
     @Override
-    public int size() {
+    public synchronized int size() {
         return queue.size();
     }
 
     @Override
-    public boolean isEmpty() {
+    public synchronized boolean isEmpty() {
         return queue.isEmpty();
     }
 
     @Override
-    public boolean contains(Object o) {
+    public synchronized boolean contains(Object o) {
         return queue.contains(o);
     }
 
@@ -48,83 +48,83 @@ public class FixedSizeQueue<E> implements Queue<E> {
     }
 
     @Override
-    public Object[] toArray() {
+    public synchronized Object[] toArray() {
         return queue.toArray();
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")
     @Override
-    public <T> T[] toArray(T[] a) {
+    public synchronized  <T> T[] toArray(T[] a) {
         return queue.toArray(a);
     }
 
     /**@param e not null*/
     @Override
-    public boolean add(@SuppressWarnings("ConstantConditions") E e){
+    public synchronized boolean add(@SuppressWarnings("ConstantConditions") E e){
         if (e == null) throw new NullPointerException("null element is not permitted.");
         if (queue.size() == maxSize) queue.poll();
         return queue.add(e);
     }
 
     @Override
-    public boolean remove(Object o) {
+    public synchronized boolean remove(Object o) {
         return queue.remove(o);
     }
 
     @Override
-    public boolean containsAll(Collection<?> c) {
+    public synchronized boolean containsAll(Collection<?> c) {
         return queue.containsAll(c);
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> c) {
+    public synchronized boolean addAll(Collection<? extends E> c) {
         if (c.isEmpty()) return false;
         for (E aC : c) add(aC);
         return true;
     }
 
     @Override
-    public boolean removeAll(Collection<?> c) {
+    public synchronized boolean removeAll(Collection<?> c) {
         return queue.removeAll(c);
     }
 
     @Override
-    public boolean retainAll(Collection<?> c) {
+    public synchronized boolean retainAll(Collection<?> c) {
         return queue.retainAll(c);
     }
 
     @Override
-    public void clear() {
+    public synchronized void clear() {
         queue.clear();
     }
 
     @Override
-    public boolean offer(E e) {
+    public synchronized boolean offer(E e) {
         return add(e);
     }
 
     @Override
-    public E remove() {
+    public synchronized E remove() {
         return queue.remove();
     }
 
     @Override
-    public E poll() {
+    public synchronized E poll() {
         return queue.poll();
     }
 
     @Override
-    public E element() {
+    public synchronized E element() {
         return queue.element();
     }
 
     @Override
-    public E peek() {
+    public synchronized E peek() {
         return queue.peek();
     }
 
     @Override
-    public String toString() {
+    public synchronized String toString() {
         if (isEmpty()) return "Queue is empty.";
         StringBuilder sb = new StringBuilder("[");
         for (E e : this) {
