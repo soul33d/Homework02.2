@@ -11,11 +11,6 @@ public class FixedSizeQueueDemo {
         FixedSizeQueue<Integer> queue = new FixedSizeQueue<>(10);
         printQueue(queue);
         queue.add(999);
-        try {
-            queue.add(null);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
         queue.add(800000);
         printQueue(queue);
         for (int i = 0; i < 16; i++) {
