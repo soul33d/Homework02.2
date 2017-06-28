@@ -9,7 +9,7 @@ import java.util.concurrent.*;
 
 public class FixedSizeQueueDemo {
     public static void main(String[] args) {
-        int iterations = 1_000_000;
+        int iterations = 10_000;
         FixedSizeQueue<Integer> queue = new FixedSizeQueue<>(iterations);
         printQueue(queue);
         queue.add(999);
@@ -17,37 +17,56 @@ public class FixedSizeQueueDemo {
         printQueue(queue);
 
         ExecutorService executorService = Executors.newFixedThreadPool(2);
-        Semaphore addSemaphore = new Semaphore(1);
+        Semaphore addSemaphore = new Semaphore(10);
         Semaphore removeSemaphore = new Semaphore(0);
         CountDownLatch countDownLatch = new CountDownLatch(2);
 
         executorService.execute(() -> {
-            for (int i = 0; i < iterations; i++) {
+            for (int i = 1; i <= iterations; i++) {
                 try {
                     addSemaphore.acquire();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 queue.add(i);
-                if (i%2 == 0) {
-                    addSemaphore.release();
-                    removeSemaphore.release();
+                if (i%10 == 0) {
+                    removeSemaphore.release(5);
                 }
             }
             countDownLatch.countDown();
         });
 
         executorService.execute(() -> {
-            for (int i = 0; i < iterations / 2; i++) {
+            for (int i = 1; i <= iterations / 2; i++) {
                 try {
                     removeSemaphore.acquire();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 queue.poll();
-                addSemaphore.release();
+                if (i%5 == 0)addSemaphore.release(10);
             }
             countDownLatch.countDown();
+        });
+
+        /*additional task daemon queue*/
+        ThreadPoolExecutor daemonPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
+        daemonPoolExecutor.setThreadFactory(r -> {
+            Thread thread = new Thread(r);
+            thread.setDaemon(true);
+            return thread;
+        });
+
+        daemonPoolExecutor.execute(() -> {
+            //noinspection InfiniteLoopStatement
+            while (true) {
+                try {
+                    Thread.sleep(5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                printQueue(queue);
+            }
         });
 
         try {
@@ -57,11 +76,15 @@ public class FixedSizeQueueDemo {
         }
         printQueue(queue);
         executorService.shutdown();
+        daemonPoolExecutor.shutdown();
     }
 
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     private static void printQueue(Queue<Integer> queue) {
-        System.out.println(queue);
-        System.out.println("Current size is " + queue.size());
-        System.out.println();
+        synchronized (queue) {
+            System.out.println(queue);
+            System.out.println("Current size is " + queue.size());
+            System.out.println();
+        }
     }
 }
