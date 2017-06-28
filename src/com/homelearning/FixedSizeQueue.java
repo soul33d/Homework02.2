@@ -3,7 +3,7 @@ package com.homelearning;
 import java.util.*;
 import java.util.stream.Stream;
 
-/** Synchronized (thread-safe) queue.
+/** Synchronized (thread-safe) fixed size queue.
  * It is imperative that the user manually synchronize on the returned
  * queue when traversing it via {@link Iterator}, {@link Spliterator}
  * or {@link Stream}:
