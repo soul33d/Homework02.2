@@ -17,7 +17,9 @@ public class FixedSizeQueueDemo {
         printQueue(queue);
 
         ExecutorService executorService = Executors.newFixedThreadPool(2);
-        Semaphore addSemaphore = new Semaphore(10);
+        int addCountPermits = 10;
+        int removeCountPermits = 2; //must be positive value from 1 to addCountPermits
+        Semaphore addSemaphore = new Semaphore(addCountPermits);
         Semaphore removeSemaphore = new Semaphore(0);
         CountDownLatch countDownLatch = new CountDownLatch(2);
 
@@ -29,22 +31,22 @@ public class FixedSizeQueueDemo {
                     e.printStackTrace();
                 }
                 queue.add(i);
-                if (i%10 == 0) {
-                    removeSemaphore.release(5);
+                if (i% addCountPermits == 0) {
+                    removeSemaphore.release(9);
                 }
             }
             countDownLatch.countDown();
         });
 
         executorService.execute(() -> {
-            for (int i = 1; i <= iterations / 2; i++) {
+            for (int i = 1; i <= iterations / removeCountPermits; i++) {
                 try {
                     removeSemaphore.acquire();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 queue.poll();
-                if (i%5 == 0)addSemaphore.release(10);
+                if (i%(addCountPermits/removeCountPermits) == 0)addSemaphore.release(addCountPermits);
             }
             countDownLatch.countDown();
         });
