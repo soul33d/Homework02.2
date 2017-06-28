@@ -9,7 +9,7 @@ import java.util.concurrent.*;
 
 public class FixedSizeQueueDemo {
     public static void main(String[] args) {
-        int iterations = 10_000;
+        int iterations = 100_000;
         FixedSizeQueue<Integer> queue = new FixedSizeQueue<>(iterations);
         printQueue(queue);
         queue.add(999);
