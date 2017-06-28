@@ -1,10 +1,22 @@
 package com.homelearning;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
+import java.util.stream.Stream;
 
+/** Synchronized (thread-safe) queue.
+ * It is imperative that the user manually synchronize on the returned
+ * queue when traversing it via {@link Iterator}, {@link Spliterator}
+ * or {@link Stream}:
+ * <pre>
+ *  FixedSizeQueue c = new FixedSizeQueue();
+ *     ...
+ *  synchronized (c) {
+ *      Iterator i = c.iterator(); // Must be in the synchronized block
+ *      while (i.hasNext())
+ *         foo(i.next());
+ *  }
+ * </pre>
+ * Failure to follow this advice may result in non-deterministic behavior.*/
 public class FixedSizeQueue<E> implements Queue<E> {
     private static final int DEFAULT_SIZE = 16;
     private Queue<E> queue;
@@ -42,6 +54,7 @@ public class FixedSizeQueue<E> implements Queue<E> {
         return queue.contains(o);
     }
 
+    /**Must be manually synchronized*/
     @Override
     public Iterator<E> iterator() {
         return queue.iterator();
